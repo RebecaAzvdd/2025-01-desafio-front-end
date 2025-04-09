@@ -1,0 +1,15 @@
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/app-siapesq
+    command: npm run dev
+    stdin_open: true
+    networks:
+      - app-siapesq-net
+
+networks:
+  app-siapesq-net:
