@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CommonsImage } from "../@types/commonsImage.type";
+import { CommonsImage } from "../@types/species.type";
 
 const COMMONS_API = "https://commons.wikimedia.org/w/api.php";
 
@@ -26,6 +26,7 @@ export const getCommonsImageData = async (
     return null;
   }
 };
+
 
 export async function searchSpeciesByName(query: string): Promise<string[]> {
   const response = await fetch(

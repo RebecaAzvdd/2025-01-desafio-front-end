@@ -2,29 +2,17 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getCommonsImageData } from "@/services/wikService";
 import { useWiki } from "@/context/wikiContext";
+import { SPECIES_NAMES } from "@/@types/species.const";
+import { getGridClass } from "@/@types/layout.const";
+import { SectionProps, SpeciesData } from "@/@types/species.type";
 
-interface SpeciesData {
-  image: string | null;
-  name: string;
-}
-
-export default function Section() {
+export default function Section({limit, columns = 3 }: SectionProps) {
   const [speciesData, setSpeciesData] = useState<SpeciesData[]>([]);
   const router = useRouter();
   const { setWikiData } = useWiki();
-
-  const speciesNames = [
-    "Panthera tigris",
-    "Canis lupus",
-    "Elephas maximus",
-    "Felis catus",
-    "Ursus arctos",
-    "Giraffa camelopardalis",
-    "Delphinus delphis",
-    "Ailuropoda melanoleuca",
-    "Struthio camelus",
-  ];
-
+  const speciesNames = SPECIES_NAMES.slice(0, limit || undefined);
+  const gridClass = getGridClass(columns);
+  
   const handleRedirect = (name: string, image: string | null) => {
     setWikiData({
       title: name,
@@ -34,6 +22,7 @@ export default function Section() {
   
     router.push(`/content/content?search=${encodeURIComponent(name)}`);
   };
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,7 +48,7 @@ export default function Section() {
   return (
     <div className="max-w-screen-xl mx-auto px-6 py-6">
       {speciesData.length > 0 && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className={gridClass}>
           {speciesData.map((species, index) => (
             <div
               key={index}
