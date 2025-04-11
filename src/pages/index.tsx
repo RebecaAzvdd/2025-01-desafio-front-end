@@ -4,15 +4,10 @@ import Hero from "@/assets/components/layout/hero/Hero";
 import Section from "@/assets/components/layout/section/section";
 import Services from "@/assets/components/layout/services/services";
 import Input from "@/assets/components/ui/input/input";
-import Head from "next/head";
 
 export default function Home() {
   return (
     <>
-      <Head>
-        <title>SIAPESQ</title>
-        <meta name="description" content="Acesso à plataforma SIAPESQ" />
-      </Head>
       <main>
         <div>
           <Header />
