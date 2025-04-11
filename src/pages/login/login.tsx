@@ -10,7 +10,7 @@ export default function Login() {
         <Header />
       </div>
 
-      <div className="mt-12 flex flex-col md:flex-row px-4 md:gap-[80px]">
+      <div className="mt-12 flex flex-col lg:flex-row items-center justify-center px-4 gap-8 lg:gap-[80px] max-w-7xl mx-auto">
         <div className="hidden lg:flex w-1/2 items-center justify-end">
           <Image
             src={hero}

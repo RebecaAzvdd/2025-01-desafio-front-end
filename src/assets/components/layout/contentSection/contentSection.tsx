@@ -1,17 +1,13 @@
-import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getCommonsImageData } from "@/services/wikService";
-
-interface WikiExtract {
-  title: string;
-  extract: string;
-}
+import { useWiki } from "@/context/wikiContext";
+import { useRouter } from "next/router";
 
 export default function ContentSection() {
-  const searchParams = useSearchParams();
-  const searchTerm = searchParams.get("search");
+  const router = useRouter();
+  const searchTerm = router.query.search as string | undefined;
   const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const [wikiData, setWikiData] = useState<WikiExtract | null>(null);
+  const { wikiData, setWikiData } = useWiki();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,18 +20,26 @@ export default function ContentSection() {
           )}`
         );
         const data = await response.json();
-        setWikiData({ title: data.title, extract: data.extract });
 
         const formattedTitle = searchTerm.replace(/ /g, "_") + ".jpg";
         const imageData = await getCommonsImageData(formattedTitle);
-        const url = imageData?.imageinfo?.[0]?.url;
-        setImageUrl(url || null);
+        const url = imageData?.imageinfo?.[0]?.url || null;
+
+        setWikiData({
+          title: data.title,
+          extract: data.extract,
+          imageUrl: url,
+        });
+        setImageUrl(url);
       } catch (error) {
         console.error("Erro ao buscar dados do animal:", error);
       }
     };
+
     fetchData();
   }, [searchTerm]);
+
+  const currentImageUrl = wikiData?.imageUrl;
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 flex flex-col items-center gap-6">
@@ -50,9 +54,9 @@ export default function ContentSection() {
         </h1>
       )}
 
-      {imageUrl ? (
+      {currentImageUrl ? (
         <img
-          src={imageUrl}
+          src={currentImageUrl}
           alt={wikiData?.title || "Imagem do animal"}
           className="w-full max-w-[800px] h-[400px] object-cover rounded-lg shadow-lg"
         />
@@ -62,7 +66,7 @@ export default function ContentSection() {
         </div>
       )}
 
-      {wikiData && (
+      {wikiData?.extract && (
         <p className="text-base sm:text-lg text-left w-full leading-relaxed text-gray-800">
           {wikiData.extract}
         </p>

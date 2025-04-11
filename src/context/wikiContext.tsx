@@ -23,7 +23,7 @@ interface WikiContextProps {
     );
   };
 
-  export const useWiki = () => {
+  export const useWiki = (): WikiContextProps => {
     const context = useContext(WikiContext);
     if (!context) {
       throw new Error("useWiki must be used within a WikiProvider");
