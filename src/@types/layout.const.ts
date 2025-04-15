@@ -1,4 +1,8 @@
 export const MAX_GRID_COLUMNS = 4;
-
-export const getGridClass = (columns: number) =>
-  `grid grid-cols-1 sm:grid-cols-${Math.min(columns, MAX_GRID_COLUMNS)} gap-8`;
+  
+export const gridColumnsMap: Record<number, string> = {
+    1: "grid-cols-1",
+    2: "grid-cols-2",
+    3: "grid-cols-3",
+    4: "grid-cols-4",
+  };;

@@ -9,8 +9,12 @@
 - [TypeScript](https://www.typescriptlang.org/) — Tipagem estática para JavaScript
 
 ---
+```
+cd 2025-01-desafio-front-end
+npm run dev
+```
 
-🐳 Docker
+🐳 Docker (Opcional)
 
 - Executar o contêiner:
 ```

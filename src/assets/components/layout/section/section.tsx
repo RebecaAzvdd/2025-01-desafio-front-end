@@ -3,26 +3,29 @@ import { useRouter } from "next/navigation";
 import { getCommonsImageData } from "@/services/wikService";
 import { useWiki } from "@/context/wikiContext";
 import { SPECIES_NAMES } from "@/@types/species.const";
-import { getGridClass } from "@/@types/layout.const";
 import { SectionProps, SpeciesData } from "@/@types/species.type";
+import { MAX_GRID_COLUMNS, gridColumnsMap } from "@/@types/layout.const";
 
-export default function Section({limit, columns = 3 }: SectionProps) {
+export default function Section({ limit, columns = 3 }: SectionProps) {
   const [speciesData, setSpeciesData] = useState<SpeciesData[]>([]);
   const router = useRouter();
   const { setWikiData } = useWiki();
   const speciesNames = SPECIES_NAMES.slice(0, limit || undefined);
-  const gridClass = getGridClass(columns);
-  
+
+  const getGridClass = (columns: number) => {
+    const colClass = gridColumnsMap[Math.min(columns, MAX_GRID_COLUMNS)] || "grid-cols-1";
+    return `grid ${colClass} gap-8`;
+  };
+
   const handleRedirect = (name: string, image: string | null) => {
     setWikiData({
       title: name,
-      extract: "", 
+      extract: "",
       imageUrl: image,
     });
-  
+
     router.push(`/content/content?search=${encodeURIComponent(name)}`);
   };
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,7 +51,7 @@ export default function Section({limit, columns = 3 }: SectionProps) {
   return (
     <div className="max-w-screen-xl mx-auto px-6 py-6">
       {speciesData.length > 0 && (
-        <div className={gridClass}>
+        <div className={getGridClass(columns)}>
           {speciesData.map((species, index) => (
             <div
               key={index}
