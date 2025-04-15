@@ -10,6 +10,7 @@
 
 ---
 ```
+npm i
 cd 2025-01-desafio-front-end
 npm run dev
 ```
@@ -18,6 +19,8 @@ npm run dev
 
 - Executar o contêiner:
 ```
+npm i
+cd 2025-01-desafio-front-end
 docker-compose up --build
 ```
 
