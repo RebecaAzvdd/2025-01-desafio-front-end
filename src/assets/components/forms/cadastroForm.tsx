@@ -1,7 +1,6 @@
 import { mockRegister } from "@/mock/loginMock";
 import { useState } from "react";
 import Button from "../ui/button/button";
-import Link from "next/link";
 
 export default function CadastroForm() {
   const [formData, setFormData] = useState({

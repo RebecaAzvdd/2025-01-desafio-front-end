@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 export default function ContentSection() {
   const router = useRouter();
   const searchTerm = router.query.search as string | undefined;
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [, setImageUrl] = useState<string | null>(null);
   const { wikiData, setWikiData } = useWiki();
 
   useEffect(() => {
@@ -24,7 +24,6 @@ export default function ContentSection() {
         const formattedTitle = searchTerm.replace(/ /g, "_") + ".jpg";
         const imageData = await getCommonsImageData(formattedTitle);
         const url = imageData?.imageinfo?.[0]?.url || null;
-
         setWikiData({
           title: data.title,
           extract: data.extract,

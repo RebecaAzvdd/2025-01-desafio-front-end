@@ -4,7 +4,7 @@ export interface User {
     password: string;
   }
   
-  let mockDatabase: User[] = [
+  export const mockDatabase: User[] = [
     {
       name: "Rebeca Dev",
       email: "rebeca@email.com",

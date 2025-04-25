@@ -37,9 +37,9 @@ export async function searchSpeciesByName(query: string): Promise<string[]> {
 
   const data = await response.json();
 
-  const results = data?.query?.search || [];
+  const results: CommonsImage[] = data?.query?.search || [];
 
-  return results
-    .map((item: any) => item.title)
-    .filter((title: string) => !title.includes("List of"));
+return results
+  .map((item) => item.title)
+  .filter((title) => !title.includes("List of"));
 }
